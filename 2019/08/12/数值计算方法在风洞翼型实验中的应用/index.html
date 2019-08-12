@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          数值计算方法在风洞翼型实验中的应用 - Beantech | 豆科技
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2019/08/12/数值计算方法在风洞翼型实验中的应用/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('undefined')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#cs" title="cs">cs</a>
+                            
+                        </div>
+                        <h1>数值计算方法在风洞翼型实验中的应用</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by John Doe on
+                            2019-08-12
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Your Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3><span id="前言">前言</span></h3>
+<p>​	夏学期选课阶段，莫得课上的我选了一堆奇怪的个性课，其中就有控制学院的数值计算方法。选中而错过退课的时候很虚，一来我没有修过常微分方程，常微分是这门课的预修课程，二来计院的相关课程数值分析在大二上开设，我还没有修过。硬着头皮上的时候发现，内容是很有意义的，作业和报告是很多的，控院的选修课是很水的…</p>
+<p>​	Numerical Method 是研究分析用计算机求解数学计算问题的数值计算方法及其理论的学科。数值计算方法一词是从苏联教材翻译而来，在美国，被称为 numerical analysis，译作数值分析。这是一个奇妙的学科分支，它和离散数学格格不入，专门研究连续的世界，广泛应用于实际工程中，因此，数值计算方法被称为工科生都应该学一学的课程。	本文是我由数值计算方法这门课的大作业整理而来，大作业代码于6月13日完成，报告于6月15日完成，虽然非常水，但还是解决了一些小问题，回顾了一些有趣的东西。</p>
+<h3><span id="问题背景">问题背景</span></h3>
+<p>​	数值计算方法经常用于飞机外形的设计，尤其是翼型。飞机的制造耗资巨大，因此，设计之初的模型实验必不可少。如何保证模型的数据可以应用到真实飞机上呢？空气动力学给出了解答，只有无量纲化之后的升力系数可用。问题因此变得简单明了，我们只需要测出相应攻角、迎角、动压下翼型各离散点的压强，对此进行曲线积分，即可求出翼型的升力系数。</p>
+<h3><span id="问题分析">问题分析</span></h3>
+<p>​	飞机要实现飞行，首先依靠机翼的升力。那么升力是怎样产生的呢？这就是人们熟知的伯努利原理：水与空气等流体，流速大的地方，压强小；流体流速小的地方，压强大。把机翼纵向剖开，会形成一个翼截面或翼剖面，在航空上称翼型。当空气流过机翼时，气流会沿上下表面分开，并在后缘处汇合。上表面弯曲，气流流过时走的路程较长，下表面较平坦，气流的行程较短。上下气流最后要在一处汇合，因而上表面的气流必须速度较快，才能与下表面气流同时到达后缘。根据伯努利原理，上表面高速气流对机翼的压力较小，下表面低速气流对机翼压力较大，这就产生了一个压力差，也就是向上的升力。</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/1565536114773.png?raw=true" alt="1565536114773"></p>
+<p>​	机翼的翼型选择是机翼设计的关键，优秀的翼型能为飞机在不同飞行状态下提供良好的升力。翼型对机翼升阻比特性有重要影响，在机翼设计的不同历史时期出现了不同类型的翼型。</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/1565536106544.png?raw=true" alt="1565536106544"></p>
+<p>​	而笔者获得的数据是DU 93-210翼型的0.8米模型数据，根据测压节点坐标绘制翼型图如下：</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/1565536093576.png?raw=true" alt="1565536093576"></p>
+<h3><span id="理论背景">理论背景</span></h3>
+<h4><span id="压强系数">压强系数</span></h4>
+<p>​	我们所用的模型是0.8米模型，尺寸显然与真实的机翼相差甚远，而如何衡量翼型的性能呢？在流体力学中，一般将压强用无量纲化的参数压强系数<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps3.png?raw=true" alt="img">来表示各个测点的压强系数值：</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps4.png?raw=true" alt="wps4.png"></p>
+<p>​	式中，<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps6.png?raw=true" alt="img">分别是测点压强、来流压强、驻点压强（总压），公式由伯努利方程得来。</p>
+<h4><span id="升力系数">升力系数</span></h4>
+<p>​	气流给予翼型的总合力在y轴上的分量成为升力，记作<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps7.png?raw=true" alt="img">。根据资料，在紊流绕流中，粘性切应力对总合力的贡献仅占很小份额，因此，通常仅考虑压强作用，升力系数定义为：</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps8.png?raw=true" alt="img"></p>
+<p>​	式中，<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps9.png?raw=true" alt="img">是升力作用面的面积，对于二元翼型，升力的作用面等于弦长C乘以单位宽度。</p>
+<h3><span id="计算方法">计算方法</span></h3>
+<p>​	设上表面的微面积ds，设该面积上的压强为p，则压力为pds，投影到y轴得<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps10.png?raw=true" alt="img">，负号表示压力方向为y轴负向。对于下表面，压力应取负值，因此，升力是上下表面压力的代数和：<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps11.png?raw=true" alt="img"></p>
+<p>​	升力系数为</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps12.png?raw=true" alt="img"></p>
+<p>​	还可以用速度环量法计算升力系数，我们在这里不做考虑。可见，根据已有数据条件，升力系数的计算可以转化为数值积分问题。</p>
+<h3><span id="数据说明">数据说明</span></h3>
+<p>​	<em>文件会放在GitHub相应项目下。</em></p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>内容</th>
+<th>单位</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>翼型坐标.txt</td>
+<td>96个测压点的坐标</td>
+<td>毫米</td>
+<td>插值、拟合出翼型轮廓曲线辅助数值积分</td>
+</tr>
+<tr>
+<td>翼型压力-130.txt</td>
+<td>雷诺数2.0×106时各测压点压强</td>
+<td>PSI，1PSI=6894.76Pa</td>
+<td>数值积分可求升力系数、阻力系数、力矩系数等</td>
+</tr>
+<tr>
+<td>翼型压力-140.txt</td>
+<td>雷诺数3.0×106时各测压点压强</td>
+<td>PSI</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>​	另有洞壁上的压强分布数据，根据牛顿第三定律，洞壁上下表面的压力差应该与翼型的升力非常接近，我们可以以此来验证实验。</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>内容</th>
+<th>单位</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>洞壁坐标.txt</td>
+<td>上下表面各135个测压点的x坐标</td>
+<td>毫米</td>
+<td>用于数值积分</td>
+</tr>
+<tr>
+<td>上洞壁压力.txt</td>
+<td>各测压点压强</td>
+<td>PSI</td>
+<td>积分计算洞壁上下表面压力差</td>
+</tr>
+<tr>
+<td>下洞壁压力.txt</td>
+<td>各测压点压强</td>
+<td>PSI</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>​	通过这些数据我们可以做两件事，一是对翼型坐标进行插值、拟合，求出轮廓曲线；二是对压强进行数值积分，求出翼型的升力系数，也可以求出升力，跟洞壁压力差比较。</p>
+<h3><span id="曲线拟合">曲线拟合</span></h3>
+<p>​	当插值节点数目较多时，普通的拉格朗日、牛顿插值法会出现龙格现象，即在区间边缘出现的振荡现象，而采用分段线性插值时，函数光滑性又较差。我们对两种方法做出尝试，特别地，对于当前问题，分段线性插值可以简单地看作将各测压点连线，运行结果如下图。可以看出，由于翼型自身的光滑性较好，即使是线性插值肉眼也看不出光滑性的损失，而由于插值节点过多，在第十个节点左右即出现了非常明显的龙格现象，并且无法收敛。</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps13.jpg?raw=true" alt="img"></p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps14.jpg?raw=true" alt="img"></p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps15.jpg?raw=true" alt="img"></p>
+<p>​	因此，为了兼顾消除龙格现象和提高函数的光滑性，我们采取分段插值，并且要求分点处若干阶导数值也相等，实际应用中常采用分段三次Hermite插值，代码如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">varargout</span>=<span class="title">pchinterp</span><span class="params">(xd,yd,ydot,xi)</span></span></span><br><span class="line"><span class="comment">% PCHINTERP  分段三次Hermite插值</span></span><br><span class="line">n=<span class="built_in">length</span>(xd);  </span><br><span class="line"><span class="keyword">if</span> <span class="built_in">length</span>(unique(xd))&lt;n  </span><br><span class="line">    error(<span class="string">'互异'</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">if</span> nargin==<span class="number">2</span> || <span class="built_in">isempty</span>(ydot)</span><br><span class="line">    ydot=gradient(yd,xd); </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">h=diff(xd); </span><br><span class="line">pp=<span class="built_in">zeros</span>(n<span class="number">-1</span>,<span class="number">6</span>);  </span><br><span class="line">y=@(x)<span class="built_in">zeros</span>(<span class="built_in">size</span>(x));  </span><br><span class="line"><span class="keyword">for</span> k=<span class="number">1</span>:n<span class="number">-1</span></span><br><span class="line">    pp(k,<span class="number">1</span>:<span class="number">4</span>)=<span class="number">2</span>*yd(k)/h(k)^<span class="number">3</span>*poly([xd(k+<span class="number">1</span>),xd(k+<span class="number">1</span>),(<span class="number">3</span>*xd(k)-xd(k+<span class="number">1</span>))/<span class="number">2</span>])+...</span><br><span class="line">        <span class="number">-2</span>*yd(k+<span class="number">1</span>)/h(k)^<span class="number">3</span>*poly([xd(k),xd(k),(<span class="number">3</span>*xd(k+<span class="number">1</span>)-xd(k))/<span class="number">2</span>])+...</span><br><span class="line">        ydot(k)/h(k)^<span class="number">2</span>*poly([xd(k),xd(k+<span class="number">1</span>),xd(k+<span class="number">1</span>)])+...</span><br><span class="line">        ydot(k+<span class="number">1</span>)/h(k)^<span class="number">2</span>*poly([xd(k),xd(k),xd(k+<span class="number">1</span>)]);</span><br><span class="line">    pp(k,<span class="number">5</span>:<span class="number">6</span>)=xd(k:k+<span class="number">1</span>);  </span><br><span class="line">    y=@(x)y(x)+polyval(pp(k,<span class="number">1</span>:<span class="number">4</span>),x).*(x&gt;=xd(k) &amp; x&lt;xd(k+<span class="number">1</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">if</span> nargin==<span class="number">4</span></span><br><span class="line">    y=feval(y,xi); </span><br><span class="line">    y(xi==xd(<span class="keyword">end</span>))=yd(<span class="keyword">end</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">pp=array2table(pp,<span class="string">'variablenames'</span>,&#123;<span class="string">'Ai'</span>,<span class="string">'Bi'</span>,<span class="string">'Ci'</span>,<span class="string">'Di'</span>,<span class="string">'xi'</span>,<span class="string">'xi_1'</span>&#125;);</span><br><span class="line">[varargout&#123;<span class="number">1</span>:<span class="number">2</span>&#125;]=deal(y,...  </span><br><span class="line">    pp);</span><br></pre></td></tr></table></figure>
+<p>​	在大程序中添加如下代码：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">xdata = wing_x(<span class="number">1</span>:<span class="number">48</span>);</span><br><span class="line">ydata = wing_y(<span class="number">1</span>:<span class="number">48</span>)</span><br><span class="line">xi = xdata</span><br><span class="line">yi = pchinterp(xdata,ydata,[],xi);</span><br><span class="line"><span class="built_in">plot</span>(xdata,ydata,<span class="string">'ko'</span>,xi,yi)</span><br><span class="line">axis equal</span><br><span class="line">axis([<span class="number">-100</span>,<span class="number">900</span>,<span class="number">-200</span>,<span class="number">200</span>]) </span><br><span class="line"><span class="built_in">hold</span> on</span><br><span class="line">xdata = wing_x(<span class="number">49</span>:<span class="number">96</span>);</span><br><span class="line">ydata = wing_y(<span class="number">49</span>:<span class="number">96</span>);</span><br><span class="line">xi = xdata</span><br><span class="line">yi = pchinterp(xdata,ydata,[],xi);</span><br><span class="line"><span class="built_in">plot</span>(xdata,ydata,<span class="string">'-o'</span>,xi,yi)</span><br><span class="line">axis equal</span><br><span class="line">axis([<span class="number">-20</span>,<span class="number">820</span>,<span class="number">-150</span>,<span class="number">150</span>]) </span><br><span class="line">title(&#123;<span class="string">'分段三次Hermite插值'</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p>​	运行结果如下：</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps16.jpg?raw=true" alt="img"></p>
+<p>​	可以看出，由于翼型本身光滑性极好，因此分段插值得到的曲线连续性、光滑度都极好，完全可以用于曲线积分时求导。</p>
+<h3><span id="洞壁压力差">洞壁压力差</span></h3>
+<p>​	对于洞壁测得的离散点压强数据，我们进行复化梯形积分，得出上下表面压力差。将积分区间[a,b]划分为n等份，分点为<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps17.png?raw=true" alt="img">,其中<img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps18.png?raw=true" alt="img">,在每个小区间上利用梯形公式，则有</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps19.png?raw=true" alt="img"></p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps20.png?raw=true" alt="img"></p>
+<p>​	代码如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">z</span> = <span class="title">trapequad</span><span class="params">(x,y,dim)</span></span></span><br><span class="line"><span class="comment">%TRAPE</span></span><br><span class="line">    perm = []; nshifts = <span class="number">0</span>;</span><br><span class="line">      dim = <span class="built_in">min</span>(<span class="built_in">ndims</span>(y)+<span class="number">1</span>, dim);</span><br><span class="line">      perm = [dim:<span class="built_in">max</span>(<span class="built_in">ndims</span>(y),dim) <span class="number">1</span>:dim<span class="number">-1</span>];</span><br><span class="line">      y = <span class="built_in">permute</span>(y,perm);</span><br><span class="line">      m = <span class="built_in">size</span>(y,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">elseif</span> nargin == <span class="number">2</span> &amp;&amp; <span class="built_in">isscalar</span>(y) </span><br><span class="line">      dim = y;</span><br><span class="line">      y = x;</span><br><span class="line">      x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">      dim = <span class="built_in">min</span>(<span class="built_in">ndims</span>(y)+<span class="number">1</span>, dim);</span><br><span class="line">      perm = [dim:<span class="built_in">max</span>(<span class="built_in">ndims</span>(y),dim) <span class="number">1</span>:dim<span class="number">-1</span>];</span><br><span class="line">      y = <span class="built_in">permute</span>(y,perm);</span><br><span class="line">      m = <span class="built_in">size</span>(y,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">      <span class="keyword">if</span> nargin &lt; <span class="number">2</span></span><br><span class="line">          y = x;</span><br><span class="line">          x = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">      [y,nshifts] = <span class="built_in">shiftdim</span>(y);</span><br><span class="line">      m = <span class="built_in">size</span>(y,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line">    x = x(:);</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isempty</span>(perm) &amp;&amp; <span class="built_in">isequal</span>(y,[])</span><br><span class="line">      z = <span class="built_in">zeros</span>(<span class="number">1</span>,class(y));</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isscalar</span>(x)</span><br><span class="line">        z = x * sum((y(<span class="number">1</span>:<span class="keyword">end</span><span class="number">-1</span>,:) + y(<span class="number">2</span>:<span class="keyword">end</span>,:)), <span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        z = diff(x,<span class="number">1</span>,<span class="number">1</span>).' * (y(<span class="number">1</span>:<span class="keyword">end</span><span class="number">-1</span>,:) + y(<span class="number">2</span>:<span class="keyword">end</span>,:))/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">    siz = <span class="built_in">size</span>(y);</span><br><span class="line">    siz(<span class="number">1</span>) = <span class="number">1</span>;</span><br><span class="line">    z = <span class="built_in">reshape</span>(z,[<span class="built_in">ones</span>(<span class="number">1</span>,nshifts),siz]);</span><br><span class="line">    <span class="keyword">if</span> ~<span class="built_in">isempty</span>(perm) &amp;&amp; ~<span class="built_in">isscalar</span>(z)</span><br><span class="line">        z = <span class="built_in">ipermute</span>(z,perm);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>​	也可以直接调用matlab自带的trapz函数，我们在大程序中加入下列代码：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sum_up_wall_pressure =trapz(up_wall,up_wall_pressure);</span><br><span class="line">sum_low_wall_pressure =trapz(low_wall,low_wall_pressure);</span><br><span class="line">sum_wall_pressure_difference = sum_low_wall_pressure - sum_up_wall_pressure;</span><br></pre></td></tr></table></figure>
+<p>​	得到上下洞壁压力差约为-112.8941，单位为PSI·mm。</p>
+<h4><span id="升力"><strong>升力</strong></span></h4>
+<p>​	计算升力，即是对翼型上下表面压力求积，做法类似洞壁压力差的计算，我们先采用梯形积分，在大程序中加入下列代码：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sum_wing_pressure_difference = sum(wing_difference);</span><br><span class="line">sum_wing_pressure = trapz(wing_x,wing_pressure);</span><br></pre></td></tr></table></figure>
+<p>​	得到上下洞壁压力差约为120.8783，单位为PSI·mm。</p>
+<p>​	当然，梯形公式虽然简单易用，但是精度较低，可以推导出复化科斯特公式如下：</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps21.png?raw=true" alt="img">				  	对于当前问题这种全为离散点的情况，意味着每个区间用于积分的函数值由其附近几个点的函数值加权得到，代码如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">q</span>=<span class="title">cotesquad</span><span class="params">(varargin)</span></span></span><br><span class="line"><span class="comment">% COTESQUAD  复化柯特斯求积</span></span><br><span class="line">args=varargin;  <span class="comment">% 将输入参数赋给args</span></span><br><span class="line"><span class="keyword">if</span> isnumeric(args&#123;<span class="number">1</span>&#125;)  </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">mod</span>(<span class="built_in">length</span>(args&#123;<span class="number">1</span>&#125;),<span class="number">4</span>)~=<span class="number">1</span></span><br><span class="line">        error(<span class="string">'数据长度不满足柯特斯公式'</span>)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> nargin==<span class="number">1</span>  </span><br><span class="line">        y=args&#123;<span class="number">1</span>&#125;;  <span class="comment">% 函数值</span></span><br><span class="line">        x=<span class="number">1</span>:<span class="built_in">length</span>(y);  <span class="comment">% 自变量</span></span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        [x,y]=deal(args&#123;<span class="number">1</span>:<span class="number">2</span>&#125;); </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    h=x(<span class="number">5</span>:<span class="number">4</span>:<span class="keyword">end</span>)-x(<span class="number">1</span>:<span class="number">4</span>:<span class="keyword">end</span><span class="number">-4</span>); </span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">if</span> nargin==<span class="number">3</span></span><br><span class="line">        [fun,a,b]=deal(args&#123;<span class="number">1</span>:<span class="number">3</span>&#125;);  </span><br><span class="line">        n=<span class="number">1000</span>; </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        [fun,a,b,n]=deal(args&#123;<span class="number">1</span>:<span class="number">4</span>&#125;);  <span class="comment">% 被积函数，积分区间和区间等分数</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    h=(b-a)/n;  <span class="comment">% 等距节点的步长</span></span><br><span class="line">    x=a+(<span class="number">0</span>:<span class="number">4</span>*n)*h/<span class="number">4</span>;  <span class="comment">% 4n+1个等距节点</span></span><br><span class="line">    y=feval(fun,x);  <span class="comment">% 计算节点处的函数值</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">q=sum(h/<span class="number">90.</span>*(<span class="number">7</span>*y(<span class="number">1</span>:<span class="number">4</span>:<span class="keyword">end</span><span class="number">-4</span>)+<span class="number">32</span>*y(<span class="number">2</span>:<span class="number">4</span>:<span class="keyword">end</span><span class="number">-3</span>)+<span class="number">12</span>*y(<span class="number">3</span>:<span class="number">4</span>:<span class="keyword">end</span><span class="number">-2</span>)+...</span><br><span class="line">    <span class="number">32</span>*y(<span class="number">4</span>:<span class="number">4</span>:<span class="keyword">end</span><span class="number">-1</span>)+<span class="number">7</span>*y(<span class="number">5</span>:<span class="number">4</span>:<span class="keyword">end</span>)));</span><br></pre></td></tr></table></figure>
+<p>​	之前的问题中，我们的重点在于曲线插值和数值积分，并没有考虑量纲的问题。</p>
+<h4><span id="升力系数">升力系数</span></h4>
+<p>​	对于刚才所求的压力，进行单位换算后，再除以动压和面积，即可得到该翼型的升力系数。根据空气动力学的理论知识，升力系数与雷诺数、迎角等相关，我得到了从-15°到25°四十一个迎角和两个不同雷诺数下的数据，数据说明如下：</p>
+<blockquote>
+<p>原始数据：</p>
+<p>第1行</p>
+<p>1   -15.0   0.0   191.477   56.517   191.980   56.591   973.20   14.40   32.50  →</p>
+<p>序号 攻角  未用  动压     风速     动压     风速     大气压   温度   湿度</p>
+<p>（落差法）（落差法）（风速管）（风速管）（100帕）（℃）</p>
+<p>-0.02657             -0.29635           0.00002    -0.02653    -0.29521</p>
+<p>P1                  P2                未用      风速管总压 风速管静压</p>
+<p>（落差法稳定段压力）（落差法试验段入口压力）</p>
+<p>（以下各行说明）</p>
+<p>共1-96行，模型表面压力      ，第一列是序号，二、三列不用，第四列是各点压力</p>
+<p>共1-187行，尾迹排管的总压   ，第一列是序号，二、三列不用，第四列是各点压力</p>
+<p>共1-135行，风洞上壁面的静压 ，第一列是序号，二、三列不用，第四列是各点压力</p>
+<p>共1-135行，风洞下壁面的静压 ，第一列是序号，二、三列不用，第四列是各点压力</p>
+<p>共1-9行，尾迹排管的静压     ，第一列是序号，二、三列不用，第四列是各点压力</p>
+<p>2行，                         不用</p>
+<p>（如上重复开始下一个攻角,直到全部41个迎角数据完）</p>
+<p>注：</p>
+<p>1、大气压的单位是百帕（100Pa），即所给值乘以100单位为pa，且大气压是绝对压力（绝压）；</p>
+<p>2、除大气压和动压外，压力单位为PSI，1PSI=6894.76Pa；</p>
+<p>2、动压单位为kgf/m2 , 1kgf/m2=9.8Pa</p>
+<p>4、除大气压和动压外，其余所有的压力均为表压，即该处压力减去大气压的差值。对于直流风洞（如NF-3），根据伯奴利原理，随风速增加，风洞内的静压降低，用表压表示时即为负值；由于存在能量损失，故总压也为一个绝对值较小的负值。所有压力加上大气压才是相应的绝对压力；</p>
+<p>5、x-actual文件中是风洞上下壁测压孔坐标；</p>
+<p>6、翼型测压孔坐标.dat文件中是翼型表面测压点的x、y坐标</p>
+</blockquote>
+<p>​	对不同条件下得到的数据进行处理，加入代码段如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">mm = <span class="number">1000</span>;</span><br><span class="line"> s=<span class="number">0.8</span>;</span><br><span class="line"> </span><br><span class="line">Wall = load(<span class="string">'洞壁坐标.txt'</span>);  <span class="comment">% 执行后，会得到一个N行3列的矩阵A。</span></span><br><span class="line">wall_i = Wall(:,<span class="number">1</span>);  <span class="comment">% 这样就可以取出A的第1列。</span></span><br><span class="line">up_wall = Wall(:, <span class="number">2</span>)/mm;</span><br><span class="line">low_wall = Wall(:, <span class="number">3</span>)/mm;</span><br><span class="line"> </span><br><span class="line">Wing = load(<span class="string">'翼型坐标.txt'</span>);</span><br><span class="line">wing_x = Wing(:, <span class="number">1</span>)/mm;</span><br><span class="line">wing_y = Wing(:, <span class="number">2</span>)/mm;</span><br><span class="line"> </span><br><span class="line">xdata = wing_x(<span class="number">1</span>:<span class="number">48</span>);</span><br><span class="line">ydata = wing_y(<span class="number">1</span>:<span class="number">48</span>)</span><br><span class="line">xi = xdata</span><br><span class="line">yi = pchinterp(xdata,ydata,[],xi);</span><br><span class="line"><span class="built_in">plot</span>(xdata,ydata,<span class="string">'ko'</span>,xi,yi)</span><br><span class="line">axis equal</span><br><span class="line">axis([<span class="number">-0.020</span>,<span class="number">0.820</span>,<span class="number">-0.150</span>,<span class="number">0.150</span>]) </span><br><span class="line"><span class="built_in">hold</span> on</span><br><span class="line">xdata = wing_x(<span class="number">49</span>:<span class="number">96</span>);</span><br><span class="line">ydata = wing_y(<span class="number">49</span>:<span class="number">96</span>);</span><br><span class="line">xi = xdata</span><br><span class="line">yi = pchinterp(xdata,ydata,[],xi);</span><br><span class="line"><span class="built_in">plot</span>(xdata,ydata,<span class="string">'-o'</span>,xi,yi)</span><br><span class="line">axis equal</span><br><span class="line">axis([<span class="number">-0.020</span>,<span class="number">0.820</span>,<span class="number">-0.150</span>,<span class="number">0.150</span>]) </span><br><span class="line">title(&#123;<span class="string">'分段三次Hermite插值'</span>&#125;)</span><br><span class="line"> </span><br><span class="line"><span class="built_in">figure</span>(<span class="number">2</span>);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> leinuoshu=<span class="number">1</span>:<span class="number">2</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> leinuoshu == <span class="number">1</span></span><br><span class="line">        data = textread(<span class="string">'CJ0130.jin'</span>);  </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        data = textread(<span class="string">'CJ0140.jin'</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    num_line = <span class="number">1</span>+<span class="number">9</span>+<span class="number">96</span>+<span class="number">2</span>*<span class="number">135</span>+<span class="number">187</span>+<span class="number">2</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> num=<span class="number">1</span>:<span class="number">41</span></span><br><span class="line"> </span><br><span class="line">        <span class="built_in">angle</span>(num) = data( (num<span class="number">-1</span>).*num_line+<span class="number">1</span> ,<span class="number">2</span>);</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        PSI=<span class="number">6894.76</span>;</span><br><span class="line">        p = data( (num<span class="number">-1</span>).*num_line+<span class="number">1</span> ,<span class="number">6</span>)*<span class="number">9.8</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="number">135</span></span><br><span class="line">            up_wall_pressure(<span class="built_in">i</span>) = data((num<span class="number">-1</span>).*num_line+<span class="number">1</span>+<span class="number">96</span>+<span class="number">187</span> +<span class="built_in">i</span>,<span class="number">4</span> )*PSI; </span><br><span class="line">            low_wall_pressure(<span class="built_in">i</span>) = data((num<span class="number">-1</span>).*num_line+<span class="number">1</span>+<span class="number">96</span>+<span class="number">187</span>+<span class="number">135</span> +<span class="built_in">i</span>,<span class="number">4</span> )*PSI;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="number">96</span></span><br><span class="line">            wing_pressure(<span class="built_in">i</span>)= data((num<span class="number">-1</span>).*num_line+<span class="number">1</span> +<span class="built_in">i</span>,<span class="number">4</span> )*PSI;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">        sum_up_wall_pressure(num) =trapequad(up_wall,up_wall_pressure);</span><br><span class="line">        sum_low_wall_pressure(num) =trapequad(low_wall,low_wall_pressure);</span><br><span class="line">        sum_wall_pressure_difference(num) = sum_low_wall_pressure(num) - sum_up_wall_pressure(num);</span><br><span class="line"> </span><br><span class="line">        sum_wing_pressure(num) =-trapequad(wing_x,wing_pressure);</span><br><span class="line"> </span><br><span class="line">        sum_wall_pressure_difference(num) = sum_wall_pressure_difference(num)/p/s;</span><br><span class="line">        sum_wing_pressure(num) = sum_wing_pressure(num)/p/s;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">    n = <span class="number">1</span>:<span class="number">1</span>:<span class="number">41</span>;</span><br><span class="line">    <span class="built_in">plot</span>(<span class="built_in">angle</span>,sum_wall_pressure_difference,<span class="string">'-o'</span>,<span class="built_in">angle</span>,sum_wing_pressure,<span class="string">'-*'</span>);</span><br><span class="line">    title(<span class="string">'不同迎角下DU 93-210翼型的升力系数'</span>);</span><br><span class="line">    <span class="keyword">if</span> leinuoshu == <span class="number">1</span></span><br><span class="line">        <span class="built_in">legend</span>(<span class="string">'洞壁压力差'</span>,<span class="string">'升力'</span>,<span class="string">'Location'</span>,<span class="string">'best'</span>);</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="built_in">legend</span>(<span class="string">'洞壁压力差'</span>,<span class="string">'升力'</span>,<span class="string">'Location'</span>,<span class="string">'best'</span>);    </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="built_in">hold</span> on</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>​	我们得到不同迎角下的升力系数如图所示，其中上图为雷诺数为2.0×106时的结果，下图为雷诺数为3.0×106时的结果：</p>
+<p><img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps22.jpg?raw=true" alt="img"> <img src="https://github.com/kamzero/kamzero.github.io/blob/master/image_/wps23.jpg?raw=true" alt="img"></p>
+<p>​	可以看出，随着迎角的增大，升力系数增大。雷诺数对翼型升力系数的影响较小，我掌握的数据较少，总的来看，雷诺数小时，升力系数的变化曲线较为平缓。升力系数的绝对值在0-1.5之间，符合流体力学常识。我们看到，DU 93-210 翼型在迎角为10°时升力系数达到了1.4以上，可以说是一款非常优秀的翼型，达到了风力机的翼型所能达到的较好水平。</p>
+<p>​	当然，翼型的升力系数并不能完全衡量飞机的升力，坊间传言歼-20的升力系数高达2以上，那是全机系数。在増升装置的作用下，高速飞行的飞机升力系数最大甚至超过4。</p>
+<h3><span id="翼型实验的重要性"><strong>翼型实验的重要性</strong></span></h3>
+<p>​	众所周知，为了保持民用飞机的安全性和经济性，飞行马赫数不宜超过临界马赫数。想要提高飞行速度就要设法提高机翼临界马赫数。减小机翼厚度或采用后掠机翼可以提高临界马赫数，但是这样会增加机翼重量。采用超临界机翼则可提高临界马赫数，同时不必付出增加机翼重量的代价。</p>
+<p>​	国产大型客机C919采用的正是超临界翼型，它是国内第一次完全自主设计的超临界机翼，采用“一体化，弱激波”的设计理念，代表我国民机技术的时代性和先进性。采用这种翼型设计，使得C919在跨音速范围内的气动性能大幅增强，提高机翼的临界马赫数，使高亚音速时阻力急剧增大的现象推迟发生，并提高姿态可控性。由于采用超临界机翼，C919的飞机结构重量也相应减少，机翼内的容积增加，可以放置更多的燃油或其他设备，获得更好的经济性。</p>
+<p>​	经过无数工程师的勤奋探索，已经发展出了许多性能优异且使用成熟的翼型，但遗憾的是，至今为止仍然没有找到一款可以适合所有飞机的超级翼型。究其原因，机翼设计实际上也反映了飞机设计的系统性和复杂性，<strong>任何一款翼型，如果拥有较高的升力系数，其阻力也会随之增大</strong>，对发动机的要求就会提高，而发动机性能的提升又会带来重量的增加等一系列问题；如果超音速性能优异，则其低速性能特别是起降过程中的气动效率就会有损失。</p>
+<p>​	为此，<strong>飞机设计过程中必须确定该型飞机的最主要飞行状态，设计师根据其飞行状态再具体为其选择最合适的翼型</strong>。换言之，飞机设计并不是单独追求某个性能的最优，而是在反复权衡比较之后的整体性能最优，是一项关联复杂、逻辑严密的系统工程。</p>
+<p>​	因此，翼型实验的意义在于，通过实验手段测量可用的翼型无量纲化升力系数、阻力系数，而飞机总设计师根据这些系数结合飞机整体需求选择最合适的翼型。由此可见，通过数值计算方法提高数值积分精度，进一步提高翼型系数的测量精度，在工程中是非常有意义的。</p>
+<h3><span id="参考">参考</span></h3>
+<ol>
+<li>大飞机报《机翼那些事儿》<a href="http://www.comac.cc/mjkp/xzs/201612/21/t20161221_4665263.shtml?from=timeline" target="_blank" rel="noopener">http://www.comac.cc/mjkp/xzs/201612/21/t20161221_4665263.shtml?from=timeline</a></li>
+<li>数值分析_维基百科 <a href="https://zh.wikipedia.org/zh/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90" target="_blank" rel="noopener">https://zh.wikipedia.org/zh/数值分析</a></li>
+</ol>
+<h3><span id="备注">备注</span></h3>
+<p>​	2019年夏学期上课初期较为痛苦，当时还在打中控杯，第一次作业很仓促地用c++应付了(老师没有限制语言和平台)，后来的本想用matplotlib和NumPy两个Python库来完成，然而助教一脸你们应该用Matlab对叭我要统一跑程序的表情，转而学了Matlab这样一个不在我计划内的工具。数值计算方法内容广泛，远非我们课堂所能覆盖，这门课程又莫得期末考，我就抱着划水的心态完成了若干个数十页报告，以至于到现在对那些算法也没有什么深入的理解，想要真正掌握，日后还得还债。</p>
+<p>​	数值计算方法这门课启发了我的思考，一来是引发的我对混沌的好奇，在这里不介绍这个概念，众所周知的蝴蝶效应就是对非线性系统的形象描述。我们认为，在线性系统中，通过数值计算方法提高数值的精确度，就可以提升运算结果的精确度，而生活中存在着大量非线性系统，最早意识到它的重要性的是一位气象学家，他反复向同一个天气预测系统中输入同一组数据，得到了迥乎不同的结果，其诱因就是输入存在着微小的误差。</p>
+<p>​	二来是让我感受到了迭代的魅力。所谓迭代法，在计算数学中，迭代是通过从一个初始估计出发寻找一系列近似解来解决问题（一般是解方程或者方程组）的数学过程，为实现这一过程所使用的方法统称。迭代法用于求解非线性方程组，令我觉得稀松平常。但是迭代法用于求解大型线性代数方程组，却令我觉得非常迷人。迭代法有两个重要的点，一是如何量化误差；二是如何从当前点向精确解迭代，第二点又包含两个细节，一是搜索方向，二是确定步长。在求解非线性方程时，我们的关注点都放在迭代过程上，因为误差易于量化，取差的绝对值即可。而对于线性代数方程组，我们引入了范数来量化误差。在人工智能的神经网络中也有类似的问题，去通过学习确定各层神经网络的参数，也涉及量化误差和迭代这两步。常见的损失函数有均方误差和交叉熵误差，也常常通过梯度来迭代，求得损失函数的极值。在大数据时代，根据公式求得精确解的方法愈发受到限制，在更多的问题当中，我们都是通过迭代的思想逐步逼近真实解，求得一个满足精度要求的近似解。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/07/21/Something-about-Python/" data-toggle="tooltip" data-placement="top" title="Something about Python ">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#cs" title="cs">cs</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
+                    
+                        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
+                    
+                        <li><a href="http://huangxuan.me" target="_blank">Hux Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">It Helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite-url/2019/08/12/数值计算方法在风洞翼型实验中的应用/";
+    var disqus_url = "http://yoursite-url/2019/08/12/数值计算方法在风洞翼型实验中的应用/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/YenYuHsuan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/YenYuHsuan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yu-hsuan-yen">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; John Doe 2019 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
